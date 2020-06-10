@@ -96,7 +96,7 @@ class PiecewiseConstantDecayWithWarmup(
     base_lr_batch_size = 256
     steps_per_epoch = epoch_size // batch_size
 
-    self._rescaled_lr = BASE_LEARNING_RATE * batch_size / base_lr_batch_size
+    self._rescaled_lr = float(BASE_LEARNING_RATE * batch_size / base_lr_batch_size)
     self._step_boundaries = [float(steps_per_epoch) * x for x in boundaries]
     self._lr_values = [self._rescaled_lr * m for m in multipliers]
     self._warmup_steps = warmup_epochs * steps_per_epoch
@@ -104,11 +104,13 @@ class PiecewiseConstantDecayWithWarmup(
   def __call__(self, step: int):
     """Compute learning rate at given step."""
     def warmup_lr():
-      return self._rescaled_lr * (
-          step / tf.cast(self._warmup_steps, tf.float32))
+        step_float = tf.cast(step, tf.float32)
+        return self._rescaled_lr * (
+            step_float / tf.cast(self._warmup_steps, tf.float32))
     def piecewise_lr():
-      return tf.compat.v1.train.piecewise_constant(
-          tf.cast(step, tf.float32), self._step_boundaries, self._lr_values)
+        return tf.compat.v1.train.piecewise_constant(
+            tf.cast(step, tf.float32), self._step_boundaries, self._lr_values)
+
     return tf.cond(step < self._warmup_steps, warmup_lr, piecewise_lr)
 
   def get_config(self) -> Mapping[str, Any]:
