@@ -1,6 +1,6 @@
 # Introduccion a Machine Learning
 
-Este repositorio contiene lecturas y tutoriales de machine learning y deep learning. Los notebooks se encuentran organizados en carpetas separadas por topicos y fueron desarrollados usando Python 3. Este material forma parte de cursos y proyectos que he dictado en Chile.
+Este repositorio contiene lecturas y tutoriales de machine learning y deep learning. Los notebooks se encuentran organizados en carpetas separadas por topicos y fueron desarrollados usando Python 3. Este material forma parte de cursos que he dictado y proyectos en los cuales he participado.
 
 
 ## Acerca del autor
